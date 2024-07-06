@@ -1,0 +1,215 @@
+
+.control {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.control-All {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.control-select {
+    -webkit-appearance: none; /* for Chrome, Safari, and Opera */
+    -moz-appearance: none; /* for Firefox */
+    appearance: none; /* for modern browsers */
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: black; /* 可选：自定义字体颜色 */
+    outline: none;
+}
+
+.control button {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 0 10px; /* 添加左右间隔 */
+}
+
+.control button:hover {
+    background-color: #005f6b;
+}
+
+.control button:active {
+    transform: scale(0.95);
+}
+
+input {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    height: 15px;
+    outline: none;
+}
+
+
+/* 隐藏下拉列表的默认箭头 */
+select {
+    -webkit-appearance: none; /* for Chrome, Safari, and Opera */
+    -moz-appearance: none; /* for Firefox */
+    appearance: none; /* for modern browsers */
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: white; /* 可选：自定义字体颜色 */
+    outline: none;
+}
+
+select::-ms-expand {
+    display: none; /* for Internet Explorer and Edge */
+}
+
+input::placeholder {
+    color: white;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+thead, tbody, tr, td, th {
+    display: block;
+}
+
+thead {
+    width: 100%;
+}
+
+tbody {
+    width: 100%;
+    height: 300px; /* Adjust as needed for table height */
+    overflow: auto;
+    display: block;
+}
+
+table th, table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd; /* Adjust as needed for column width */
+    float: left;
+    box-sizing: border-box;
+}
+
+table th {
+    background-color: #007BFF;
+    color: white;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+
+
+.app {
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+    width: 100%;
+    height: 100vh;
+    background-color: skyblue; /* 天蓝色背景 */
+    padding: 20px; /* 给整体页面留出一些空隙 */
+    box-sizing: border-box; /* 包含 padding 在内计算宽高 */
+}
+
+.header {
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 15px;
+    margin-bottom: 20px; /* 与内容部分的间距 */
+}
+
+.container {
+    display: flex;
+    flex-grow: 1;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: white; /* 未选择的选项为白色 */
+    display: flex;
+    flex-direction: column; /* 垂直排布 */
+    padding: 10px;
+    border-radius: 15px; /* 圆角 */
+    margin-right: 20px; /* 与主体部分的间距 */
+    margin-bottom: 10px; /* 与底部的间隙减小 */
+}
+
+.sidebar .active {
+    background-color: darkblue; /* 选择的选项为深蓝 */
+    color: white;
+    border-radius: 15px; /* 选择的选项也有圆角 */
+}
+
+.sidebar a {
+    color: black; /* 默认未选择的选项为黑色 */
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 15px; /* 每个选项都添加圆角 */
+}
+
+.sidebar a:hover {
+    background-color: lightgray; /* 悬停时背景色变为浅灰色 */
+}
+
+.main-content {
+    flex-grow: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 10px; /* 底部间隙 */
+}
+
+.container,
+.header {
+    margin-left: 20px; /* 左侧间隙 */
+    margin-right: 20px; /* 右侧间隙 */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+    font-family: Arial, sans-serif;
+}
+
+#myChart {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.canvas-container {
+    position: relative;
+    height: 400px;
+    width: 100%;
+}
+
+canvas {
+    max-width: 100%;
+    margin: 20px 0;
+}
