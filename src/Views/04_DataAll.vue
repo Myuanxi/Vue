@@ -1,16 +1,19 @@
 <style scoped>@import "..";</style>
 <template>
+
 	<div class="control-All">
-		<select v-model = "time" class = "control-select">
+		<select v-model = "time">
 			<option :value = "7" @click="getDataAll">近 7 天（可选）</option>
 			<option :value = "10" @click="getDataAll">近 10 天</option>
 			<option :value = "15" @click="getDataAll">近 15 天</option>
 			<option :value = "30" @click="getDataAll">近 30 天</option>
 		</select>
 	</div>
-	<div style="background-color: skyblue">
+
+	<div>
 		<canvas id="myChart"></canvas>
 	</div>
+
 </template>
 
 <script setup lang="ts">

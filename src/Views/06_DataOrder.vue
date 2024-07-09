@@ -1,29 +1,29 @@
 <style scoped>@import "..";</style>
 <template>
-	<div>
+	<div class="table">
 		<table>
 			<thead>
 			<tr>
-				<th style="width: 9%">
+				<th style="width: 8%">
 					<input type="text" v-model="orderId" placeholder="订单编号"/>
 				</th>
 				<th style="width: 9%">
 					<input type="text" v-model="payId" placeholder="卖家编号"/>
 				</th>
-				<th style="width: 9%">卖家姓名</th>
+				<th style="width: 8%">卖家姓名</th>
 				<th style="width: 9%">
-					<input type="text" v-model="buyerId" placeholder="卖家编号"/>
+					<input type="text" v-model="buyerId" placeholder="买家编号"/>
 				</th>
-				<th style="width: 9%">买家姓名</th>
-				<th style="width: 9%">
+				<th style="width: 8%">买家姓名</th>
+				<th style="width: 10%">
 					<input type="text" v-model="goodId" placeholder="物品编号"/>
 				</th>
-				<th style="width: 9%">交易金额</th>
-				<th style="width: 9%">支付时间</th>
-				<th style="width: 9%">到货时间</th>
-				<th style="width: 9%">到款时间</th>
-				<th style="width: 10%">
-					<select v-model = "state"><!--已支付，交易中，交易完成，退款-->
+				<th style="width: 8%">交易金额</th>
+				<th style="width: 11%">支付时间</th>
+				<th style="width: 11%">到货时间</th>
+				<th style="width: 11%">到款时间</th>
+				<th style="width: 7%">
+					<select v-model = "state">
 						<option value = "全部">全部</option>
 						<option value = "已支付">已支付</option>
 						<option value = "交易中">交易中</option>
@@ -35,17 +35,17 @@
 			</thead>
 			<tbody>
 			<tr v-for="order in orderList" :key="order.id">
-				<td style="width: 9%">{{ order.id }}</td>
-				<td style="width: 9%">{{ order.sellerId }}</td>
-				<td style="width: 9%">{{ order.sellerName }}</td>
+				<td style="width: 8%">{{ order.id }}</td>
+				<td style="width: 9%">{{ order.good.sellerId }}</td>
+				<td style="width: 8%">{{ order.good.sellerName }}</td>
 				<td style="width: 9%">{{ order.buyerId }}</td>
-				<td style="width: 9%">{{ order.buyerName }}</td>
-				<td style="width: 9%">{{ order.goodId }}</td>
-				<td style="width: 9%">{{ order.price }}</td>
-				<td style="width: 9%">{{ order.timePayed }}</td>
-				<td style="width: 9%">{{ order.timeEnd }}</td>
-				<td style="width: 9%">{{ order.timePayBack }}</td>
-				<td style="width: 10%">{{ order.state }}</td>
+				<td style="width: 8%">{{ order.buyerName }}</td>
+				<td style="width: 10%">{{ order.goodId }}</td>
+				<td style="width: 8%">{{ order.good.price }}</td>
+				<td style="width: 11%">{{ order.payTime }}</td>
+				<td style="width: 11%">{{ order.payBackTime }}</td>
+				<td style="width: 11%">{{ order.endTime }}</td>
+				<td style="width: 7%">{{ order.state }}</td>
 			</tr>
 			</tbody>
 		</table>
@@ -68,18 +68,24 @@
 	let state = ref("全部");
 	let pageNum = ref(1);
 	let msg = "0"
-
+	let id = ref("")
 	let orderList = ref<Order[]>([]);
 
 	async function getDataOrder() {
 		try {
-			let response = await axios.get('https://your-api-endpoint.com/data',{
+			let response = await axios.get('http://162.14.74.64:8080/order/getOrderList',{
 				params:{
+					orderId:orderId.value,//订单编号
+					sellerId:payId.value,//卖家编号
+					buyerId:buyerId.value,//买家编号
+					goodId:goodId.value,//商品
+					state:state.value,//订单状态
 					pageNum: pageNum.value,
 				}
 			});
 
 			orderList.value = response.data.data;
+
 			msg = response.data.msg;
 
 		} catch (error) {
@@ -107,33 +113,24 @@
 	})
 
 	watch(orderId,() => {
-		payId.value = "";
-		buyerId.value = "";
-		goodId.value = "";
-		state.value = "";
 		getDataOrder()
 	})
 
 	watch(payId,() => {
-		orderId.value = "";
 		getDataOrder()
 	})
 
 	watch(buyerId,() => {
-		buyerId.value = "";
 		getDataOrder()
 	})
 
 	watch(goodId,() => {
-		goodId.value = "";
 		getDataOrder()
 	})
 
 	watch(state,() => {
-		state.value = "";
 		getDataOrder()
 	})
-
 
 	onMounted(() => {
 		getDataOrder();

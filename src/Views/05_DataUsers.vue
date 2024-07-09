@@ -1,6 +1,6 @@
 <style scoped> @import "..";</style>
 <template>
-	<div>
+	<div class="table">
 		<table>
 			<thead>
 			<tr>

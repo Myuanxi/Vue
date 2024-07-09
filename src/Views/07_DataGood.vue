@@ -1,47 +1,45 @@
 <style scoped>@import "..";</style>
 <template>
-	<div>
+	<div class="table">
 		<table>
 			<thead>
 			<tr>
-				<th style="width: 17%">
-					<input type="text" v-model="goodId" placeholder="商品编号（可填）"/>
+				<th style="width: 10%">
+					<input v-model="goodId" placeholder="商品编号"/>
 				</th>
-				<th style="width: 17%">
-					<input type="text" v-model="goodName" placeholder="商品名称（可填）"/>
+				<th style="width: 57%">
+					<input v-model="goodName" placeholder="商品名称"/>
 				</th>
-				<th style="width: 16%">
-					<select v-model = "goodType">
-						<option value = "商品品类">商品品类（可选）</option>
-						<option value = "登录">食品零食</option>
-						<option value = "购物">洗漱日化</option>
-						<option value = "出售">钱包服饰</option>
-						<option value = "发帖">书籍资料</option>
-						<option value = "登录">学习用品</option>
-						<option value = "购物">电子数码</option>
-						<option value = "出售">电器家具</option>
-						<option value = "发帖">代步工具</option>
-						<option value = "登录">体育器材</option>
-						<option value = "购物">票卡转让</option>
-						<option value = "出售">仙女集市</option>
-						<option value = "发帖">其他</option>
+				<th style="width: 8%">
+					<select v-model = "type">
+						<option value = "商品种类">商品品类</option>
+						<option value = "食品零食">食品零食</option>
+						<option value = "洗漱日化">洗漱日化</option>
+						<option value = "钱包服饰">钱包服饰</option>
+						<option value = "书籍资料">书籍资料</option>
+						<option value = "学习用品">学习用品</option>
+						<option value = "电子数码">电子数码</option>
+						<option value = "电器家具">电器家具</option>
+						<option value = "代步工具">代步工具</option>
+						<option value = "体育器材">体育器材</option>
+						<option value = "其他">其他</option>
 					</select>
 				</th>
-				<th style="width: 16%">商品价格</th>
-				<th style="width: 17%">
-					<input type="text" v-model="userId" placeholder="卖家账户（可填）"/>
+				<th style="width: 8%">商品价格</th>
+				<th style="width: 9%">
+					<input type="text" v-model="userId" placeholder="卖家账户"/>
 				</th>
-				<th style="width: 17%">卖家姓名</th>
+				<th style="width: 8%">卖家姓名</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr v-for="good in goodList" :key="good.goodId">
-				<td style="width: 17%">{{ good.goodId }}</td>
-				<td style="width: 17%">{{ good.goodName }}</td>
-				<td style="width: 16%">{{ good.goodState }}</td>
-				<td style="width: 16%">{{ good.price }}</td>
-				<td style="width: 17%">{{ good.sellerId }}</td>
-				<td style="width: 17%">{{ good.sellerName }}</td>
+				<td style="width: 10%">{{ good.goodId }}</td>
+				<td style="width: 57%">{{ good.goodName }}</td>
+				<td style="width: 8%">{{ good.type }}</td>
+				<td style="width: 8%">{{ good.price }}</td>
+				<td style="width: 9%">{{ good.sellerId }}</td>
+				<td style="width: 8%">{{ good.sellerName }}</td>
 			</tr>
 			</tbody>
 		</table>
@@ -56,13 +54,13 @@
 
 <script setup lang="ts">
 	import axios from "axios";
-	import {onMounted, reactive, ref, watch} from "vue";
+	import {onMounted, ref, watch} from "vue";
 	import type { Good } from "@/type";
 
 	let goodId = ref("");
 	let goodName = ref("");
 	let userId = ref("");
-	let goodType = ref("商品品类");
+	let type = ref("商品种类");
 	let pageNum = ref(1);
 	let msg = "0"
 
@@ -70,16 +68,16 @@
 
 	async function getDataGood() {
 		try {
-			let response = await axios.get('https://your-api-endpoint.com/data',{
+			let response = await axios.get('http://162.14.74.64:8080/good/getGoodList',{
 				params:{
-					goodId:goodId.value,
-					goodName:goodName.value,
-					userId: userId.value,
-					goodType: goodType.value,
-					pageNum: pageNum.value,
+					goodId:goodId.value,//编号
+					goodName:goodName.value,//名字
+					userId: userId.value,//发布者ID
+					goodType: type.value,//种类
+					pageNum: pageNum.value,//页数
 				}
 			});
-			goodList = ref(response.data.data);
+			goodList.value = response.data.data;
 			msg = response.data.msg;
 		} catch (error) {
 			console.error('Error fetching data:', error);
@@ -117,7 +115,7 @@
 		getDataGood();
 	})
 
-	watch(goodType, () => {
+	watch(type, () => {
 		getDataGood();
 	})
 

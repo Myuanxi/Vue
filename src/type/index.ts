@@ -12,20 +12,21 @@ export interface Order {
     buyerId:string,
     buyerName:string,
     goodId:string,
+    good:Good,
     price:number,
-    timePayed?:Date,//支付时间
-    timeEnd?:Date,//到款时间
-    timePayBack?:Date,//退款
+    payTime?:Date,//支付时间
+    payBackTime?:Date,//到款时间
+    endTime?:Date,//退款
     state:string
 }
 //物品信息（物品编号 物品名称 物品品类 价格 剩余数量 卖家ID 卖家姓名 帖子ID ）
 export interface Good {
-    goodId:string,
-    goodName:string,
-    goodState:string,
-    price:number,
-    sellerId:number,
-    sellerName:string
+    goodId:string,//物品编号
+    goodName:string,//物品名称
+    type:string,//物品种类
+    price:number,//价格
+    sellerId:string,//卖家ID
+    sellerName:string//卖家姓名
 }
 //用户日志（登录记录、购物记录、出售记录、发帖记录、时间）
 export interface User {
