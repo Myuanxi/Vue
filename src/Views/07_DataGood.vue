@@ -68,7 +68,7 @@
 
 	async function getDataGood() {
 		try {
-			let response = await axios.get('http://162.14.74.64:8080/good/getGoodList',{
+			let response = await axios.get('http://localhost:8080/good/getGoodList',{
 				params:{
 					goodId:goodId.value,//编号
 					goodName:goodName.value,//名字

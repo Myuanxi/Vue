@@ -1,4 +1,4 @@
-<style scoped>@import '@/test.css';</style>
+<style scoped>@import '@';</style>
 <template>
 	<div class ="app">
 

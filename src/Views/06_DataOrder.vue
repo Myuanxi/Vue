@@ -73,7 +73,7 @@
 
 	async function getDataOrder() {
 		try {
-			let response = await axios.get('http://162.14.74.64:8080/order/getOrderList',{
+			let response = await axios.get('http://localhost:8080/order/getOrderList',{
 				params:{
 					orderId:orderId.value,//订单编号
 					sellerId:payId.value,//卖家编号

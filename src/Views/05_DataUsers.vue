@@ -52,7 +52,7 @@
 	async function getDataUser() {
 		//从后端获取users
 		try {
-			let response = await axios.get('http://162.14.74.64:8080/log/getLogs',{
+			let response = await axios.get('http://localhost:8080/log/getLogs',{
 				params:{
 					userId:userId.value,
 					select:select.value,
