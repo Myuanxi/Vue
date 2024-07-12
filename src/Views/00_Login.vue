@@ -44,6 +44,7 @@ const login = async () => {
 		console.error('Error:', error);
 		message.value = '登录失败，请稍后再试。';
 	}
+	const emit = defineEmits(['login']);
 	emit('login');
 };
 </script>
