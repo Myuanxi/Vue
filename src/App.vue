@@ -41,7 +41,7 @@
 <script setup lang="ts">
 import { RouterView, RouterLink } from 'vue-router';
 import { ref } from 'vue';
-import LoginComponent from '@/Login.vue';
+import LoginComponent from '@/Views/00_Login.vue';
 
 const isLoggedIn = ref(false);
 

@@ -16,39 +16,33 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { ref } from 'vue';
 import axios from 'axios';
-import { defineEmits } from 'vue';
 
-export default {
-	data() {
-		return {
-			id: '',
-			password: '',
-			message: '',
-			kind: 0
-		};
-	},
-	methods: {
-		async login() {
-			try {
-				const response = await axios.post('http://localhost:8080/user/login', {
-					id: this.id,
-					password: this.password,
-					kind: this.kind
-				});
+const id = ref('');
+const password = ref('');
+const message = ref('');
+const kind = ref(0);
 
-				if (response.data.code == 1) {
-					this.$emit('login'); // 登录成功，通知父组件
-				} else {
-					this.message = response.data.message;
-				}
-			} catch (error) {
-				console.error('Error:', error);
-				this.message = '登录失败，请稍后再试。';
-			}
-			this.$emit('login');
+const login = async () => {
+	try {
+		const response = await axios.post('http://localhost:8080/user/login', {
+			id: id.value,
+			password: password.value,
+			kind: kind.value
+		});
+
+		if (response.data.code === 1) {
+			// 登录成功，通知父组件
+			const emit = defineEmits(['login']);
+			emit('login');
+		} else {
+			message.value = response.data.message;
 		}
+	} catch (error) {
+		console.error('Error:', error);
+		message.value = '登录失败，请稍后再试。';
 	}
 };
 </script>
