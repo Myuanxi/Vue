@@ -1,9 +1,83 @@
-<style scoped></style>
-<!--用户管理（删除用户、购买权限、出售权限、发送公告）-->
+<style scoped>@import "..";</style>
 <template>
-
+	<div class="table">
+		<h2>用户管理</h2>
+		<div class="search-bar">
+			<label for="userId">用户ID</label>
+			<input style="background-color: #dddddd" type="text" placeholder="搜索用户" v-model="searchQuery">
+			<button @click="searchUser">搜索</button>
+		</div>
+		<table>
+			<thead>
+			<tr>
+				<th style="width:15%">用户ID</th>
+				<th style="width:15%">用户姓名</th>
+				<th style="width:15%">购买权限</th>
+				<th style="width:15%">出售权限</th>
+				<th style="width:15%">通知内容</th>
+				<th style="width:10%">发送</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr v-for="user in userList" :key="user.id">
+				<td style="width:15%">用户ID: {{ user.id }}</td>
+				<td style="width:15%" :userId="user.userId">{{ user.name }}</td>
+				<td style="width:15%"><input type="checkbox" v-model="user.canBuy" @change="() => updateUser(user)"></td>
+				<td style="width:15%"><input type="checkbox" v-model="user.canSell" @change="() => updateUser(user)"></td>
+				<td style="width:15%"><input type="text" v-model="user.announcement"></td>
+				<td style="width:10%"><button @click="() => announceUser(user)">发送</button></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
+interface User {
+	id: number;
+	userId: string;
+	name: string;
+	canBuy: boolean;
+	canSell: boolean;
+	announcement: string;
+}
+
+const searchQuery = ref('');
+const userList = ref<Array<User>>([]);
+
+const searchUser = async () => {
+	try {
+		const response = await axios.get('http://localhost:8080/user/getUserList', {
+			params: { query: searchQuery.value }
+		});
+		if (response.data.code === 1) {
+			userList.value = response.data.data;
+		}
+	} catch (error) {
+		console.error('Failed to search users:', error);
+	}
+};
+
+const updateUser = async (user: User) => {
+	try {
+		await axios.post('http://localhost:8080/user/update', user);
+	} catch (error) {
+		console.error('Failed to update user:', error);
+	}
+};
+
+const announceUser = async (user: User) => {
+	try {
+		await axios.post(`http://localhost:8080/user/${user.id}/notify`, { announcement: user.announcement });
+	} catch (error) {
+		console.error('Failed to announce user:', error);
+	}
+};
+
+onMounted(() => {
+	searchUser();
+});
 </script>
