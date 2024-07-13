@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import axios from "axios";
-import { reactive, onMounted, ref } from "vue";
+import {reactive, onMounted, ref, watch} from "vue";
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 import { type Data } from "@/type";
@@ -32,7 +32,7 @@ let myChart: Chart | null = null;
 async function getDataAll() {
 	//从后端获取data
 	try {
-		let response = await axios.get('https://your-api-endpoint.com/data',{
+		let response = await axios.get('http://localhost:8080/data/getData',{
 			params:{
 				time: time.value,
 			}
@@ -100,6 +100,10 @@ function drawChart() {
 onMounted(() => {
 	getDataAll();
 });
+
+watch(time, () => {
+	getDataAll();
+})
 
 </script>
 
