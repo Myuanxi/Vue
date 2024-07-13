@@ -3,11 +3,9 @@
 <template>
 	<div class="app">
 		<RouterView></RouterView>
-
-		</div>
+	</div>
 </template>
 
 <script setup lang="ts">
-import { RouterView, RouterLink } from 'vue-router';
-import LoginComponent from '@/Views/00_Login.vue';
+import {RouterView} from 'vue-router';
 </script>

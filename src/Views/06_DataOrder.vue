@@ -50,6 +50,7 @@
 			</tbody>
 		</table>
 	</div>
+
 	<div class = "control">
 		<button @click = "isBegin">上一页</button>
 		<button @click = "isEnd">下一页</button>

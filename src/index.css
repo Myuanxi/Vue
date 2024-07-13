@@ -11,7 +11,7 @@
     left: 0px;
     top: 0px;
 }
-
+/*标题部分*/
 .head {
     background-color: white;
     padding: 20px;
@@ -19,12 +19,12 @@
     border-radius: 15px;
     margin-bottom: 20px; /* 与内容部分的间距 */
 }
-
+/*标题以下*/
 .main {
     display: flex;
     flex-grow: 1;
 }
-
+/*标签栏*/
 .tag {
     width: 200px;
     background-color: white; /* 未选择的选项为白色 */
@@ -53,6 +53,7 @@
     background-color: lightgray; /* 悬停时背景色变为浅灰色 */
 }
 
+/*主体*/
 .body {
     width: 100%;
     flex-grow: 1;
