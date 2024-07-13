@@ -2,8 +2,8 @@
 
 <template>
 	<div class="app">
-		<div class="head" v-if="isLoggedIn">
-			<button @click="isLoggedIn = false" style="
+		<div class="head" v-if="isLogin.isLogin">
+			<button @click="isLogin.isLogin = false" style="
 				float: right;
 				background-color: red;
 				height: 30px;
@@ -16,7 +16,7 @@
 			<h1>&emsp;&emsp;&emsp;&emsp;&emsp;八爪鱼校园二手物品流转平台</h1>
 		</div>
 
-		<div class="main" v-if="isLoggedIn">
+		<div class="main" v-if="isLogin.isLogin">
 			<div class="tag">
 				<RouterLink to="/" active-class="active">用户管理</RouterLink>
 				<RouterLink to="/manageReport" active-class="active">举报内容</RouterLink>
@@ -33,19 +33,14 @@
 		</div>
 
 		<div v-else>
-			<LoginComponent @login="handleLogin"></LoginComponent>
+			<LoginComponent></LoginComponent>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
 import { RouterView, RouterLink } from 'vue-router';
-import { ref } from 'vue';
 import LoginComponent from '@/Views/00_Login.vue';
-
-const isLoggedIn = ref(false);
-
-const handleLogin = () => {
-	isLoggedIn.value = true;
-};
+import {useLoginStore} from "@/store";
+const isLogin = useLoginStore();
 </script>

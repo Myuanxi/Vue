@@ -20,6 +20,9 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
+import {useLoginStore} from "@/store";
+const isLogin = useLoginStore();
+
 const id = ref('');
 const password = ref('');
 const message = ref('');
@@ -44,8 +47,7 @@ const login = async () => {
 		console.error('Error:', error);
 		message.value = '登录失败，请稍后再试。';
 	}
-	const emit = defineEmits(['login']);
-	emit('login');
+	isLogin.isLogin = true;
 };
 </script>
 
