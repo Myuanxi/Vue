@@ -69,11 +69,11 @@
 }
 
 
-/*图表文件CSS，唯一图表*/
-#myChart {
-    max-width: 800px;
-    margin: 20px auto;
-}
+/*!*图表文件CSS，唯一图表*!*/
+/*#myChart {*/
+/*    max-width: 800px;*/
+/*    margin: 20px auto;*/
+/*}*/
 
 
 /*控制栏标签，唯一指定标签*/

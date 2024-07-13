@@ -60,7 +60,9 @@
 	import axios from "axios";
 	import {onMounted, ref, watch} from "vue";
 	import type { Order } from "@/type";
+	import {useRouter} from "vue-router";
 
+	const router = useRouter();
 	let orderId = ref("")
 	let payId = ref("");
 	let buyerId = ref("");
@@ -81,9 +83,14 @@
 					goodId:goodId.value,//商品
 					state:state.value,//订单状态
 					pageNum: pageNum.value,
-				}
+				},
+				headers:{
+				"Authorization":sessionStorage.getItem("Authorization")
+			}
 			});
-
+			if(response.data.msg=='NOTLOGIN'){
+				router.push('/login');
+			}
 			orderList.value = response.data.data;
 
 			msg = response.data.msg;

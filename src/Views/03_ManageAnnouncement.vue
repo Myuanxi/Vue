@@ -26,6 +26,9 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import {useRouter} from "vue-router";
+
+const router = useRouter();
 
 interface Announcement {
 	id: number;
@@ -42,7 +45,14 @@ const newAnnouncement = ref<{ title: string; content: string }>({
 
 const fetchAnnouncements = async () => {
 	try {
-		const response = await axios.get('http://localhost:8080/announcement/getAnnouncement');
+		const response = await axios.get('http://localhost:8080/announcement/getAnnouncement',{
+			headers:{
+				"Authorization":sessionStorage.getItem("Authorization")
+			}
+		});
+		if(response.data.msg=='NOTLOGIN'){
+			router.push('/login');
+		}
 		if (response.data.code === 1) {
 			announcements.value = response.data.data;
 		}
@@ -53,7 +63,11 @@ const fetchAnnouncements = async () => {
 
 const submitAnnouncement = async () => {
 	try {
-		await axios.post('http://localhost:8080/announcement/addAnnouncement', newAnnouncement.value);
+		await axios.post('http://localhost:8080/announcement/addAnnouncement', newAnnouncement.value,{
+			headers:{
+				"Authorization":sessionStorage.getItem("Authorization")
+			}
+		});
 		newAnnouncement.value.title = '';
 		newAnnouncement.value.content = '';
 		fetchAnnouncements();

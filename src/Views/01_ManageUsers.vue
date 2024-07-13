@@ -35,6 +35,9 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import {useRouter} from "vue-router";
+
+const router = useRouter();
 
 interface User {
 	id: number;
@@ -51,8 +54,14 @@ const userList = ref<Array<User>>([]);
 const searchUser = async () => {
 	try {
 		const response = await axios.get('http://localhost:8080/user/getUserList', {
-			params: { query: searchQuery.value }
+			params: { query: searchQuery.value },
+			headers:{
+				"Authorization":sessionStorage.getItem("Authorization")
+			}
 		});
+		if(response.data.msg=='NOTLOGIN'){
+			router.push('/login');
+		}
 		if (response.data.code === 1) {
 			userList.value = response.data.data;
 		}
@@ -63,7 +72,11 @@ const searchUser = async () => {
 
 const updateUser = async (user: User) => {
 	try {
-		await axios.post('http://localhost:8080/user/update', user);
+		await axios.post('http://localhost:8080/user/update', user, {
+			headers:{
+				"Authorization":sessionStorage.getItem("Authorization")
+			}
+		});
 	} catch (error) {
 		console.error('Failed to update user:', error);
 	}
@@ -71,7 +84,11 @@ const updateUser = async (user: User) => {
 
 const announceUser = async (user: User) => {
 	try {
-		await axios.post(`http://localhost:8080/user/${user.id}/notify`, { announcement: user.announcement });
+		await axios.post(`http://localhost:8080/user/${user.id}/notify`, { announcement: user.announcement},{
+			headers:{
+				"Authorization":sessionStorage.getItem("Authorization")
+			}
+		});
 	} catch (error) {
 		console.error('Failed to announce user:', error);
 	}

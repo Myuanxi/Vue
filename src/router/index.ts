@@ -10,39 +10,55 @@ import DataAll from '@/Views/04_DataAll.vue'
 import DataUsers from '@/Views/05_DataUsers.vue'
 import DataOrder from '@/Views/06_DataOrder.vue'
 import DataProduct from '@/Views/07_DataGood.vue'
-
+import Login from '@/Views/00_Login.vue'
+import Main from "@/Views/main.vue";
 //第二步：创建路由器
 const router = createRouter({
     history: createWebHistory(),
     routes:[
         {
+            path:"/login",
+            component:Login,
+        },
+        {
             path:"/",
-            component:ManageUsers
+            component:Login,
         },
         {
-            path:"/manageReport",
-            component:ManageReport
-        },
-        {
-            path:"/manageAnnouncement",
-            component:ManageAnnouncement
-        },
-        {
-            path:"/dataAll",
-            component:DataAll
-        },
-        {
-            path:"/dataUsers",
-            component:DataUsers
-        },
-        {
-            path:"/dataOrder",
-            component:DataOrder
-        },
-        {
-            path:"/dataProduct",
-            component:DataProduct
+            path:"/main",
+            component:Main,
+            children:[
+                {
+                    path:"/manageUsers",
+                    component:ManageUsers
+                },
+                {
+                    path:"/manageReport",
+                    component:ManageReport
+                },
+                {
+                    path:"/manageAnnouncement",
+                    component:ManageAnnouncement
+                },
+                {
+                    path:"/dataAll",
+                    component:DataAll
+                },
+                {
+                    path:"/dataUsers",
+                    component:DataUsers
+                },
+                {
+                    path:"/dataOrder",
+                    component:DataOrder
+                },
+                {
+                    path:"/dataProduct",
+                    component:DataProduct
+                }
+            ]
         }
+
     ]
 })
 

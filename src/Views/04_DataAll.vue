@@ -22,10 +22,11 @@ import {reactive, onMounted, ref, watch} from "vue";
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 import { type Data } from "@/type";
+import {useRouter} from "vue-router";
 
+const router = useRouter();
 let dataList: Data[] = reactive([]);
 let data: Data[] = [];
-
 let time = ref(7);
 let myChart: Chart | null = null;
 
@@ -35,9 +36,15 @@ async function getDataAll() {
 		let response = await axios.get('http://localhost:8080/data/getData',{
 			params:{
 				time: time.value,
+			},
+			headers:{
+				"Authorization":sessionStorage.getItem("Authorization")
 			}
 		});
-		data = response.data;
+		if(response.data.msg=='NOTLOGIN'){
+			router.push('/login');
+		}
+		data = response.data.data;
 	} catch (error) {
 		console.error('Error fetching data:', error);
 	}
@@ -59,7 +66,7 @@ function drawChart() {
 	myChart = new Chart(ctx, {
 		type: 'line',
 		data: {
-			labels: dataList.map(item => (item.time)),
+			labels: dataList.map(item => (item.start)),
 			datasets: [
 				{
 					label: '交易量',

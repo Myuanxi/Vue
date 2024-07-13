@@ -56,7 +56,9 @@
 	import axios from "axios";
 	import {onMounted, ref, watch} from "vue";
 	import type { Good } from "@/type";
+	import {useRouter} from "vue-router";
 
+	const router = useRouter();
 	let goodId = ref("");
 	let goodName = ref("");
 	let userId = ref("");
@@ -75,8 +77,14 @@
 					userId: userId.value,//发布者ID
 					goodType: type.value,//种类
 					pageNum: pageNum.value,//页数
+				},
+				headers:{
+					"Authorization":sessionStorage.getItem("Authorization")
 				}
 			});
+			if(response.data.msg=='NOTLOGIN'){
+				router.push('/login');
+			}
 			goodList.value = response.data.data;
 			msg = response.data.msg;
 		} catch (error) {

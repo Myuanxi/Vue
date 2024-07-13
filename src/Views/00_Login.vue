@@ -19,10 +19,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import axios from 'axios';
-
-import {useLoginStore} from "@/store";
-const isLogin = useLoginStore();
-
+import {useRouter} from "vue-router";
+const router = useRouter();
 const id = ref('');
 const password = ref('');
 const message = ref('');
@@ -35,11 +33,10 @@ const login = async () => {
 			password: password.value,
 			kind: kind.value
 		});
-
 		if (response.data.code === 1) {
 			// 登录成功，通知父组件
-			const emit = defineEmits(['login']);
-			emit('login');
+			sessionStorage.setItem("Authorization",response.data.data);
+			router.push('/manageUsers');
 		} else {
 			message.value = response.data.message;
 		}
@@ -47,7 +44,6 @@ const login = async () => {
 		console.error('Error:', error);
 		message.value = '登录失败，请稍后再试。';
 	}
-	isLogin.isLogin = true;
 };
 </script>
 

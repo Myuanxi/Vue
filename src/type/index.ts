@@ -2,7 +2,7 @@ export interface Data {
     transaction: number,//交易量
     amount: number,//交易金额
     login: number,//登录量
-    time: Date//时间
+    start: Date//时间
 }
 //订单管理（订单编号 卖家 买家 物品编号 交易金额 支付时间 到货时间 到款时间）
 export interface Order {

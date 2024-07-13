@@ -52,6 +52,9 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import {useRouter} from "vue-router";
+
+const router = useRouter();
 
 interface Report {
 	id: number;
@@ -70,7 +73,10 @@ const type = ref<number>(0);
 const fetchReports = async () => {
 	try {
 		const response = await axios.get('http://localhost:8080/report/getReports', {
-			params: { selectType: type.value, selectState: state.value }
+			params: { selectType: type.value, selectState: state.value },
+			headers:{
+				"Authorization":sessionStorage.getItem("Authorization")
+			}
 		});
 		if (response.data.code === 1) {
 			reports.value = response.data.data;
@@ -83,7 +89,10 @@ const fetchReports = async () => {
 const deleteBeReported = async (reportId: number) => {
 	try {
 		await axios.delete(`http://localhost:8080/report/deleteBeReported`, {
-			params: { reportId }
+			params: { reportId },
+			headers:{
+				"Authorization":sessionStorage.getItem("Authorization")
+			}
 		});
 		fetchReports();
 	} catch (error) {
@@ -94,7 +103,10 @@ const deleteBeReported = async (reportId: number) => {
 const deleteReport = async (id: number) => {
 	try {
 		await axios.delete(`http://localhost:8080/report/deleteReport`, {
-			params: { id }
+			params: { id },
+			headers:{
+				"Authorization":sessionStorage.getItem("Authorization")
+			}
 		});
 		fetchReports();
 	} catch (error) {

@@ -41,7 +41,9 @@
 	import axios from "axios";
 	import {onMounted,  ref, watch} from "vue";
 	import type { User } from "@/type";
+	import {useRouter} from "vue-router";
 
+	const router = useRouter();
 	let userId = ref("");
 	let select = ref("执行");
 	let pageNum = ref(1);
@@ -57,8 +59,14 @@
 					userId:userId.value,
 					select:select.value,
 					pageNum:pageNum.value
+				},
+				headers:{
+					"Authorization":sessionStorage.getItem("Authorization")
 				}
 			});
+			if(response.data.msg=='NOTLOGIN'){
+				router.push('/login');
+			}
 			userList.value = response.data.data;
 			msg = response.data.msg;
 
