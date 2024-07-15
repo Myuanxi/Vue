@@ -72,11 +72,14 @@ const searchUser = async () => {
 
 const updateUser = async (user: User) => {
 	try {
-		await axios.post('http://localhost:8080/user/update', user, {
+		const response = await axios.post('http://localhost:8080/user/update', user, {
 			headers:{
 				"Authorization":sessionStorage.getItem("Authorization")
 			}
 		});
+		if(response.data.msg=='NOTLOGIN'){
+			router.push('/login');
+		}
 	} catch (error) {
 		console.error('Failed to update user:', error);
 	}
@@ -84,11 +87,14 @@ const updateUser = async (user: User) => {
 
 const announceUser = async (user: User) => {
 	try {
-		await axios.post(`http://localhost:8080/user/${user.id}/notify`, { announcement: user.announcement},{
+		const response = await axios.post(`http://localhost:8080/user/${user.id}/notify`, { announcement: user.announcement},{
 			headers:{
 				"Authorization":sessionStorage.getItem("Authorization")
 			}
 		});
+		if(response.data.msg=='NOTLOGIN'){
+			router.push('/login');
+		}
 	} catch (error) {
 		console.error('Failed to announce user:', error);
 	}

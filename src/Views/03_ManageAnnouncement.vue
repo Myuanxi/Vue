@@ -63,11 +63,14 @@ const fetchAnnouncements = async () => {
 
 const submitAnnouncement = async () => {
 	try {
-		await axios.post('http://localhost:8080/announcement/addAnnouncement', newAnnouncement.value,{
+		const response = await axios.post('http://localhost:8080/announcement/addAnnouncement', newAnnouncement.value,{
 			headers:{
 				"Authorization":sessionStorage.getItem("Authorization")
 			}
 		});
+		if(response.data.msg=='NOTLOGIN'){
+			router.push('/login');
+		}
 		newAnnouncement.value.title = '';
 		newAnnouncement.value.content = '';
 		fetchAnnouncements();

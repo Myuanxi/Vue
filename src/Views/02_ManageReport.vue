@@ -88,12 +88,15 @@ const fetchReports = async () => {
 
 const deleteBeReported = async (reportId: number) => {
 	try {
-		await axios.delete(`http://localhost:8080/report/deleteBeReported`, {
+		const response = await axios.delete(`http://localhost:8080/report/deleteBeReported`, {
 			params: { reportId },
 			headers:{
 				"Authorization":sessionStorage.getItem("Authorization")
 			}
 		});
+		if(response.data.msg=='NOTLOGIN'){
+			router.push('/login');
+		}
 		fetchReports();
 	} catch (error) {
 		console.error('Failed to delete reported content:', error);
@@ -102,12 +105,15 @@ const deleteBeReported = async (reportId: number) => {
 
 const deleteReport = async (id: number) => {
 	try {
-		await axios.delete(`http://localhost:8080/report/deleteReport`, {
+		const response = await axios.delete(`http://localhost:8080/report/deleteReport`, {
 			params: { id },
 			headers:{
 				"Authorization":sessionStorage.getItem("Authorization")
 			}
 		});
+		if(response.data.msg=='NOTLOGIN'){
+			router.push('/login');
+		}
 		fetchReports();
 	} catch (error) {
 		console.error('Failed to delete report:', error);

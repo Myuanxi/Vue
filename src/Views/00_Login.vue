@@ -26,6 +26,12 @@ const password = ref('');
 const message = ref('');
 const kind = ref(0);
 
+import turnstilePlugin from "@cloudflare/pages-plugin-turnstile";
+
+/**
+ * POST /api/submit-with-plugin
+ */
+
 const login = async () => {
 	try {
 		const response = await axios.post('http://localhost:8080/user/login', {

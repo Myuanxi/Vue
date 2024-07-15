@@ -11,6 +11,7 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
+    "@cloudflare/pages-plugin-turnstile": "^1.0.2",
     "@vue/runtime-core": "^3.4.31",
     "@vue/runtime-dom": "^3.4.31",
     "axios": "^1.7.2",
