@@ -66,7 +66,6 @@ const submitAnnouncement = async () => {
 		if(response.data.msg=='NOTLOGIN'){
 			router.push('/login');
 		}
-		newAnnouncement.value.time = '';
 		newAnnouncement.value.content = '';
 		fetchAnnouncements();
 	} catch (error) {
