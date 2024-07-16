@@ -7,9 +7,10 @@
 				<th style="width: 10%">
 					<input v-model="goodId" placeholder="商品编号"/>
 				</th>
-				<th style="width: 57%">
+				<th style="width: 51%">
 					<input v-model="goodName" placeholder="商品名称"/>
 				</th>
+				<th style="width: 6%">状态</th>
 				<th style="width: 8%">
 					<select v-model = "type">
 						<option value = "商品种类">商品品类</option>
@@ -33,9 +34,13 @@
 			</tr>
 			</thead>
 			<tbody>
-			<tr v-for="good in goodList" :key="good.goodId">
+			<tr v-for="(good,index) in goodList" :key="good.goodId">
 				<td style="width: 10%">{{ good.goodId }}</td>
-				<td style="width: 57%">{{ good.goodName }}</td>
+				<td style="width: 51%">
+					{{ good.goodName }}
+					<button style="float: right;" @click="deleteGood(index)">删除</button>
+				</td>
+				<td style="width: 8%">{{ good.state }}</td>
 				<td style="width: 8%">{{ good.type }}</td>
 				<td style="width: 8%">{{ good.price }}</td>
 				<td style="width: 9%">{{ good.sellerId }}</td>
@@ -66,6 +71,18 @@
 	let msg = "0"
 
 	let goodList = ref<Good[]>([]);
+
+	async function deleteGood(index: number) {
+		try {
+			await axios.post('http://localhost:8080/good/updateGood', {
+				goodId: goodList.value[index].goodId,
+				state: "已删除"
+			})
+		} catch (error) {
+			console.log(error)
+		}
+		getDataGood();
+	}
 
 	async function getDataGood() {
 		try {

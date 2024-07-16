@@ -27,6 +27,7 @@ export interface Good {
     price:number,//价格
     sellerId:string,//卖家ID
     sellerName:string//卖家姓名
+    state:string
 }
 //用户日志（登录记录、购物记录、出售记录、发帖记录、时间）
 export interface User {
