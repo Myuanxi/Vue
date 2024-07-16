@@ -12,18 +12,20 @@
 			<tr>
 				<th style="width:15%">用户ID</th>
 				<th style="width:15%">用户姓名</th>
-				<th style="width:15%">购买权限</th>
-				<th style="width:15%">出售权限</th>
+				<th style="width:10%">购买权限</th>
+				<th style="width:10%">出售权限</th>
+				<th style="width:10%">用户信誉</th>
 				<th style="width:15%">通知内容</th>
 				<th style="width:10%">发送</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr v-for="user in userList" :key="user.id">
-				<td style="width:15%">用户ID: {{ user.id }}</td>
+				<td style="width:15%">{{ user.id }}</td>
 				<td style="width:15%" :userId="user.userId">{{ user.name }}</td>
-				<td style="width:15%"><input type="checkbox" v-model="user.canBuy" @change="() => updateUser(user)"></td>
-				<td style="width:15%"><input type="checkbox" v-model="user.canSell" @change="() => updateUser(user)"></td>
+				<td style="width:10%"><input type="checkbox" v-model="user.canBuy" @change="() => updateUser(user)"></td>
+				<td style="width:10%"><input type="checkbox" v-model="user.canSell" @change="() => updateUser(user)"></td>
+				<td style="width:10%"></td>
 				<td style="width:15%"><input type="text" v-model="user.announcement"></td>
 				<td style="width:10%"><button @click="() => announceUser(user)">发送</button></td>
 			</tr>
@@ -87,7 +89,10 @@ const updateUser = async (user: User) => {
 
 const announceUser = async (user: User) => {
 	try {
-		const response = await axios.post(`http://localhost:8080/user/${user.id}/notify`, { announcement: user.announcement},{
+		const response = await axios.post(`http://localhost:8080/announcement/addAnnouncement`, {
+			receiveId: user.id,
+			content: user.announcement
+		},{
 			headers:{
 				"Authorization":sessionStorage.getItem("Authorization")
 			}

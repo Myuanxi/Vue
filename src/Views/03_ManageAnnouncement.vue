@@ -3,10 +3,6 @@
 	<div class="main-content">
 		<form @submit.prevent="submitAnnouncement">
 			<div>
-				<label for="title">标题:</label>
-				<input id="title" v-model="newAnnouncement.title" required />
-			</div>
-			<div>
 				<label for="content">内容:</label>
 				<textarea id="content" v-model="newAnnouncement.content" required></textarea>
 			</div>
@@ -15,7 +11,7 @@
 		<div class="announcement-list">
 			<h3>历史公告</h3>
 			<div v-for="announcement in announcements" :key="announcement.id" class="announcement-item">
-				<h4>{{ announcement.title }}</h4>
+				<h4>{{ announcement.time }}</h4>
 				<p>{{ announcement.content }}</p>
 				<small>{{ new Date(announcement.createdAt).toLocaleString() }}</small>
 			</div>
@@ -32,14 +28,13 @@ const router = useRouter();
 
 interface Announcement {
 	id: number;
-	title: string;
+	time: string;
 	content: string;
 	createdAt: string;
 }
 
 const announcements = ref<Announcement[]>([]);
-const newAnnouncement = ref<{ title: string; content: string }>({
-	title: '',
+const newAnnouncement = ref<{ content: string }>({
 	content: ''
 });
 
@@ -71,7 +66,7 @@ const submitAnnouncement = async () => {
 		if(response.data.msg=='NOTLOGIN'){
 			router.push('/login');
 		}
-		newAnnouncement.value.title = '';
+		newAnnouncement.value.time = '';
 		newAnnouncement.value.content = '';
 		fetchAnnouncements();
 	} catch (error) {
