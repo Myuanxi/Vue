@@ -38,7 +38,7 @@
 				<td style="width: 10%">{{ good.goodId }}</td>
 				<td style="width: 51%">
 					{{ good.goodName }}
-					<button style="float: right;" @click="deleteGood(index)">删除</button>
+					<button style="float: right;" @click="deleteGood(index)" v-if="good.state !== '已删除'">删除</button>
 				</td>
 				<td style="width: 8%">{{ good.state }}</td>
 				<td style="width: 8%">{{ good.type }}</td>

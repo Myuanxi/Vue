@@ -15,6 +15,7 @@
 				<th style="width:10%">购买权限</th>
 				<th style="width:10%">出售权限</th>
 				<th style="width:10%">用户信誉</th>
+				<th style="width:10%">信誉分修改</th>
 				<th style="width:15%">通知内容</th>
 				<th style="width:10%">发送</th>
 			</tr>
@@ -25,7 +26,10 @@
 				<td style="width:15%" :userId="user.userId">{{ user.name }}</td>
 				<td style="width:10%"><input type="checkbox" v-model="user.canBuy" @change="() => updateUser(user)"></td>
 				<td style="width:10%"><input type="checkbox" v-model="user.canSell" @change="() => updateUser(user)"></td>
-				<td style="width:10%"></td>
+				<td style="width:10%">{{ user.credit }}</td>
+				<td style="width:10%">
+					<input type="number" v-model.number="user.credit" @change="() => modifyCredit(user)">
+				</td>
 				<td style="width:15%"><input type="text" v-model="user.announcement"></td>
 				<td style="width:10%"><button @click="() => announceUser(user)">发送</button></td>
 			</tr>
@@ -48,6 +52,7 @@ interface User {
 	canBuy: boolean;
 	canSell: boolean;
 	announcement: string;
+	credit:number;
 }
 
 const searchQuery = ref('');
@@ -102,6 +107,24 @@ const announceUser = async (user: User) => {
 		}
 	} catch (error) {
 		console.error('Failed to announce user:', error);
+	}
+};
+
+const modifyCredit = async (user: User) => {
+	try {
+		const response = await axios.post(`http://localhost:8080/user/updateUserCredit`, {
+			id: user.id,
+			credit: user.credit
+		}, {
+			headers: {
+				"Authorization": sessionStorage.getItem("Authorization")
+			}
+		});
+		if (response.data.msg == 'NOTLOGIN') {
+			router.push('/login');
+		}
+	} catch (error) {
+		console.error('Failed to modify credit:', error);
 	}
 };
 
