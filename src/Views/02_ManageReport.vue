@@ -38,7 +38,7 @@
 				<td>{{ report.informerId }}</td>
 				<td>
 					<div class="button-container">
-						<button @click="deleteBeReported(report.reportId)">删除被举报内容</button>
+						<button @click="deleteBeReported(report)">删除被举报内容</button>
 						<button @click="deleteReport(report.id)">未发现问题</button>
 					</div>
 				</td>
@@ -86,10 +86,9 @@ const fetchReports = async () => {
 	}
 };
 
-const deleteBeReported = async (reportId: number) => {
+const deleteBeReported = async (report: Report) => {
 	try {
-		const response = await axios.delete(`http://localhost:8080/report/deleteBeReported`, {
-			params: { reportId },
+		const response = await axios.post(`http://localhost:8080/report/remove`, report, {
 			headers:{
 				"Authorization":sessionStorage.getItem("Authorization")
 			}

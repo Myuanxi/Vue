@@ -93,6 +93,7 @@
 					userId: userId.value,//发布者ID
 					goodType: type.value,//种类
 					pageNum: pageNum.value,//页数
+					user:1
 				},
 				headers:{
 					"Authorization":sessionStorage.getItem("Authorization")
