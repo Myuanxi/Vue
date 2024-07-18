@@ -84,6 +84,10 @@ onMounted(() => {
 }
 .announcement-list {
 	margin-top: 20px;
+	max-height: 400px
+; /* 设置容器的最大高度 */
+	overflow-y: auto
+; /* 垂直方向添加滚动条 */
 }
 .announcement-item {
 	border: 1px solid #ddd;
