@@ -12,7 +12,7 @@
 					<select v-model = "select">
 						<option value = "执行">执行（可选）</option>
 						<option value = "登陆">登陆</option>
-						<option value = "购买">购买</option>
+						<option value = "购物">购物</option>
 						<option value = "出售">出售</option>
 						<option value = "发帖">发帖</option>
 					</select>
@@ -88,18 +88,22 @@
 	}
 
 	watch(pageNum, async () => {
+		pageNum.value = 1;
 		getDataUser();
 	})
 
 	watch(userId, () => {
+		pageNum.value = 1;
 		getDataUser();
 	})
 
 	watch(select, () => {
+		pageNum.value = 1;
 		getDataUser();
 	})
 
 	onMounted(() => {
+		pageNum.value = 1;
 		getDataUser();
 	});
 </script>

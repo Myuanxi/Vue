@@ -129,22 +129,27 @@
 	})
 
 	watch(goodId, () => {
+		pageNum.value = 1;
 		getDataGood();
 	})
 
 	watch(goodName, () => {
+		pageNum.value = 1;
 		getDataGood();
 	})
 
 	watch(userId, () => {
+		pageNum.value = 1;
 		getDataGood();
 	})
 
 	watch(type, () => {
+		pageNum.value = 1;
 		getDataGood();
 	})
 
 	onMounted(() => {
+		pageNum.value = 1;
 		getDataGood();
 	});
 </script>

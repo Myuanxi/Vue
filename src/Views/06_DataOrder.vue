@@ -27,7 +27,7 @@
 						<option value = "全部">全部</option>
 						<option value = "已支付">已支付</option>
 						<option value = "交易中">交易中</option>
-						<option value = "交易完成">交易完成</option>
+						<option value = "交易已完成">交易已完成</option>
 						<option value = "退款">退款</option>
 					</select>
 				</th>
@@ -121,26 +121,32 @@
 	})
 
 	watch(orderId,() => {
+		pageNum.value = 1;
 		getDataOrder()
 	})
 
 	watch(payId,() => {
+		pageNum.value = 1;
 		getDataOrder()
 	})
 
 	watch(buyerId,() => {
+		pageNum.value = 1;
 		getDataOrder()
 	})
 
 	watch(goodId,() => {
+		pageNum.value = 1;
 		getDataOrder()
 	})
 
 	watch(state,() => {
+		pageNum.value = 1;
 		getDataOrder()
 	})
 
 	onMounted(() => {
+		pageNum.value = 1;
 		getDataOrder();
 	});
 </script>
