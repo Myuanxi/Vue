@@ -4,7 +4,7 @@
 		<table>
 			<thead>
 			<tr>
-				<th>用户ID</th>
+
 				<th>举报信息ID</th>
 				<th>举报内容</th>
 				<th>举报类型
@@ -21,8 +21,8 @@
 				<th>状态
 					<select v-model="state">
 						<option value="">所有状态</option>
-						<option value="未处理">未处理</option>
-						<option value="已处理">已处理</option>
+						<option value=1>未处理</option>
+						<option value=2>已处理</option>
 					</select>
 					<button @click="fetchReports">筛选</button>
 				</th>
@@ -31,18 +31,17 @@
 			<tbody>
 			<tr v-for="report in reports" :key="report.id">
 				<td>{{ report.id }}</td>
-				<td>{{ report.reportId }}</td>
 				<td>{{ report.detail }}</td>
-				<td>{{ report.type }}</td>
+				<td><div v-if="report.type==1">帖子</div><div v-if="report.type==2">评论</div></td>
 				<td>{{ report.reportedId }}</td>
 				<td>{{ report.informerId }}</td>
-				<td>
-					<div class="button-container">
-						<button @click="deleteBeReported(report)">删除被举报内容</button>
-						<button @click="deleteReport(report.id)">未发现问题</button>
+				<td >
+					<div class="button-container" v-if="report.state !== 2">
+						<button @click="deleteBeReported(report.id,report)" v-if="report.type==2 && report.state == 1">删除被举报内容</button>
+						<button @click="deleteReport(report.id,report)" style="float: right" v-if="report.state == 1">已处理</button>
 					</div>
 				</td>
-				<td>{{ report.state }}</td>
+				<td><div v-if="report.state==1">未处理</div><div v-if="report.state==2">已处理</div></td>
 			</tr>
 			</tbody>
 		</table>
@@ -63,7 +62,8 @@ interface Report {
 	type: number;
 	reportedId: number;
 	informerId: string;
-	state: string;
+	state: number;
+	credit:number;
 }
 
 const reports = ref<Report[]>([]);
@@ -86,7 +86,7 @@ const fetchReports = async () => {
 	}
 };
 
-const deleteBeReported = async (report: Report) => {
+const deleteBeReported = async (id: number,report: Report) => {
 	try {
 		const response = await axios.post(`http://localhost:8080/report/remove`, report, {
 			headers:{
@@ -102,10 +102,9 @@ const deleteBeReported = async (report: Report) => {
 	}
 };
 
-const deleteReport = async (id: number) => {
+const deleteReport = async (id: number,report: Report) => {
 	try {
-		const response = await axios.delete(`http://localhost:8080/report/deleteReport`, {
-			params: { id },
+		const response = await axios.post(`http://localhost:8080/report/updateReport`, report, {
 			headers:{
 				"Authorization":sessionStorage.getItem("Authorization")
 			}
@@ -115,8 +114,12 @@ const deleteReport = async (id: number) => {
 		}
 		fetchReports();
 	} catch (error) {
-		console.error('Failed to delete report:', error);
+		console.error('Failed to delete reported content:', error);
 	}
+};
+
+const updateReportState = async (report: Report) => {
+	report.state = 2;
 };
 
 onMounted(() => {
