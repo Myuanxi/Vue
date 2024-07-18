@@ -12,8 +12,6 @@
 			<tr>
 				<th style="width:15%">用户ID</th>
 				<th style="width:15%">用户姓名</th>
-				<th style="width:10%">购买权限</th>
-				<th style="width:10%">出售权限</th>
 				<th style="width:10%">用户信誉</th>
 				<th style="width:10%">信誉分修改</th>
 				<th style="width:15%">通知内容</th>
@@ -24,8 +22,6 @@
 			<tr v-for="user in userList" :key="user.id">
 				<td style="width:15%">{{ user.id }}</td>
 				<td style="width:15%" :userId="user.userId">{{ user.name }}</td>
-				<td style="width:10%"><input type="checkbox" v-model="user.canBuy" @change="() => updateUser(user)"></td>
-				<td style="width:10%"><input type="checkbox" v-model="user.canSell" @change="() => updateUser(user)"></td>
 				<td style="width:10%">{{ user.credit }}</td>
 				<td style="width:10%">
 					<input type="number" v-model.number="user.credit" @change="() => modifyCredit(user)">
