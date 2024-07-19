@@ -122,9 +122,6 @@
 	}
 
 	watch(pageNum, (value) => {
-		if (value < 1) {
-			pageNum.value = 1;
-		}
 		getDataGood();
 	})
 

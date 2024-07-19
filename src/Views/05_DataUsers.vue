@@ -87,8 +87,7 @@
 		}
 	}
 
-	watch(pageNum, async () => {
-		pageNum.value = 1;
+	watch(pageNum,  () => {
 		getDataUser();
 	})
 
