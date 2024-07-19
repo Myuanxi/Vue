@@ -9,9 +9,7 @@ export interface Order {
     id:string,
     sellerId:string,
     sellerName:string,
-    buyerId:string,
-    buyerName:string,
-    goodId:string,
+    buyer:User,
     good:Good,
     price:number,
     payTime?:Date,//支付时间

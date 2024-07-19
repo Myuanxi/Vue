@@ -38,9 +38,9 @@
 				<td style="width: 8%">{{ order.id }}</td>
 				<td style="width: 9%">{{ order.good.sellerId }}</td>
 				<td style="width: 8%">{{ order.good.sellerName }}</td>
-				<td style="width: 9%">{{ order.buyerId }}</td>
-				<td style="width: 8%">{{ order.buyerName }}</td>
-				<td style="width: 10%">{{ order.goodId }}</td>
+				<td style="width: 9%">{{ order.buyer.id }}</td>
+				<td style="width: 8%">{{ order.buyer.name }}</td>
+				<td style="width: 10%">{{ order.good.goodId }}</td>
 				<td style="width: 8%">{{ order.good.price }}</td>
 				<td style="width: 11%">{{ order.payTime }}</td>
 				<td style="width: 11%">{{ order.payBackTime }}</td>
